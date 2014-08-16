@@ -3,7 +3,7 @@
  *
  * @version: 0.0.1
  * @author: Nicholas McCready
- * @date: Sat Aug 16 2014 12:22:09 GMT-0400 (EDT)
+ * @date: Sat Aug 16 2014 12:57:50 GMT-0400 (EDT)
  * @license: MIT
  */
 var blockExport = true;
