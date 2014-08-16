@@ -60,14 +60,14 @@ describe 'browserfy extensions', ->
 
 
       describe 'full blown example', ->
-        it 'works', ->
+        it 'works from self', ->
           dep = @subject
           bower = '../../app/components/'
           $ = new dep "#{bower}jquery/dist/jquery.js", '$'
           bootstrap = new dep "#{bower}bootstrap/dist/bootstrap.js", 'bootstrap'
           angular = new dep("#{bower}angular/angular.js", 'angular').dependsOn $
 
-          dependencies = _.extends [$, bootstrap, angular].map (b) -> b.bfy()
+          dependencies =  $.combine [bootstrap, angular]
           str = """
             {
               "#{$.location}" : {"exports" :  "#{$.exports}" },
@@ -75,5 +75,23 @@ describe 'browserfy extensions', ->
               "#{angular.location}" : {"exports" : "#{angular.exports}", "depends" : { "#{$.location}" : {"exports" : "#{$.exports}" }}}
             }
             """
-#          console.log str
+          # console.log str
+          dependencies.should.be.eql JSON.parse str
+
+        it 'works from combiner/class', ->
+          dep = @subject
+          bower = '../../app/components/'
+          $ = new dep "#{bower}jquery/dist/jquery.js", '$'
+          bootstrap = new dep "#{bower}bootstrap/dist/bootstrap.js", 'bootstrap'
+          angular = new dep("#{bower}angular/angular.js", 'angular').dependsOn $
+
+          dependencies =  dep.combine [$,bootstrap, angular]
+          str = """
+            {
+              "#{$.location}" : {"exports" :  "#{$.exports}" },
+              "#{bootstrap.location}" : {"exports" : "#{bootstrap.exports}" },
+              "#{angular.location}" : {"exports" : "#{angular.exports}", "depends" : { "#{$.location}" : {"exports" : "#{$.exports}" }}}
+            }
+            """
+          # console.log str
           dependencies.should.be.eql JSON.parse str

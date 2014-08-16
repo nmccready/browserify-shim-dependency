@@ -66,16 +66,25 @@ describe('browserfy extensions', function() {
         });
       });
       return describe('full blown example', function() {
-        return it('works', function() {
+        it('works from self', function() {
           var $, angular, bootstrap, bower, dep, dependencies, str;
           dep = this.subject;
           bower = '../../app/components/';
           $ = new dep("" + bower + "jquery/dist/jquery.js", '$');
           bootstrap = new dep("" + bower + "bootstrap/dist/bootstrap.js", 'bootstrap');
           angular = new dep("" + bower + "angular/angular.js", 'angular').dependsOn($);
-          dependencies = _["extends"]([$, bootstrap, angular].map(function(b) {
-            return b.bfy();
-          }));
+          dependencies = $.combine([bootstrap, angular]);
+          str = "{\n  \"" + $.location + "\" : {\"exports\" :  \"" + $.exports + "\" },\n  \"" + bootstrap.location + "\" : {\"exports\" : \"" + bootstrap.exports + "\" },\n  \"" + angular.location + "\" : {\"exports\" : \"" + angular.exports + "\", \"depends\" : { \"" + $.location + "\" : {\"exports\" : \"" + $.exports + "\" }}}\n}";
+          return dependencies.should.be.eql(JSON.parse(str));
+        });
+        return it('works from combiner/class', function() {
+          var $, angular, bootstrap, bower, dep, dependencies, str;
+          dep = this.subject;
+          bower = '../../app/components/';
+          $ = new dep("" + bower + "jquery/dist/jquery.js", '$');
+          bootstrap = new dep("" + bower + "bootstrap/dist/bootstrap.js", 'bootstrap');
+          angular = new dep("" + bower + "angular/angular.js", 'angular').dependsOn($);
+          dependencies = dep.combine([$, bootstrap, angular]);
           str = "{\n  \"" + $.location + "\" : {\"exports\" :  \"" + $.exports + "\" },\n  \"" + bootstrap.location + "\" : {\"exports\" : \"" + bootstrap.exports + "\" },\n  \"" + angular.location + "\" : {\"exports\" : \"" + angular.exports + "\", \"depends\" : { \"" + $.location + "\" : {\"exports\" : \"" + $.exports + "\" }}}\n}";
           return dependencies.should.be.eql(JSON.parse(str));
         });

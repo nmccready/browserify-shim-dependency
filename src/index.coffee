@@ -1,6 +1,15 @@
 #Dependency object to make browserfy shim declaration easier and less terse
 #https://github.com/thlorenz/browserify-shim
-dep = class Dependency
+if isNode
+  BaseObject = require('ns2').BaseObject
+
+combiner =
+  combine: (deps) ->
+    _.extends deps.map (b) -> b.bfy()
+
+dep = class Dependency extends BaseObject
+  @extend combiner
+  thisClass = @
   constructor: (@location, @exports)->
 
   dependsOn: (deps) =>
@@ -21,6 +30,9 @@ dep = class Dependency
       exports: @exports
     obj["#{@location}"].depends = @depends if @depends
     return obj
+
+  combine: (deps) =>
+    thisClass.combine deps.concat [@]
 
 if isNode
   module.exports = dep

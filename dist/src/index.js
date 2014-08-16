@@ -1,10 +1,33 @@
-var Dependency, dep,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var BaseObject, Dependency, combiner, dep,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-dep = Dependency = (function() {
+if (isNode) {
+  BaseObject = require('ns2').BaseObject;
+}
+
+combiner = {
+  combine: function(deps) {
+    return _["extends"](deps.map(function(b) {
+      return b.bfy();
+    }));
+  }
+};
+
+dep = Dependency = (function(_super) {
+  var thisClass;
+
+  __extends(Dependency, _super);
+
+  Dependency.extend(combiner);
+
+  thisClass = Dependency;
+
   function Dependency(location, exports) {
     this.location = location;
     this.exports = exports;
+    this.combine = __bind(this.combine, this);
     this.bfy = __bind(this.bfy, this);
     this.dependsOn = __bind(this.dependsOn, this);
   }
@@ -38,9 +61,13 @@ dep = Dependency = (function() {
     return obj;
   };
 
+  Dependency.prototype.combine = function(deps) {
+    return thisClass.combine(deps.concat([this]));
+  };
+
   return Dependency;
 
-})();
+})(BaseObject);
 
 if (isNode) {
   module.exports = dep;

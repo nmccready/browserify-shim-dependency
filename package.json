@@ -4,7 +4,7 @@
   "description": "easier way to create dependencies for browserify-shim",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "./cgulp spec"
+    "test": "cgulp spec; ./node_modules/karma/bin/karma start;"
   },
   "homepage": "https://github.com/nmccready/browserify-shim-dependency",
   "repository": {
@@ -18,9 +18,11 @@
     "ns2": "^1.0.1"
   },
   "devDependencies": {
+    "cgulp": "^1.0.1",
     "coffee-script": "^1.7.1",
+    "coffeegulp": "0.0.4",
     "event-stream": "^3.1.5",
-    "gulp": "^3.8.6",
+    "gulp": "^3.8.7",
     "gulp-coffee": "^2.1.1",
     "gulp-coffeelint": "^0.3.3",
     "gulp-concat": "^2.3.3",
