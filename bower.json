@@ -1,0 +1,36 @@
+{
+  "name": "browserify-shim-dependency",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nmccready/browserify-shim-dependency",
+  "authors": [
+    "Nick McCready <nmccready@gmail.com>"
+  ],
+  "description": "easier way to create dependencies for browserify-shim",
+  "main": "'dist/browserify-shim-dependency.js'",
+  "test": "karma start",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "browserify",
+    "browserify-shim'"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests",
+    "spec"
+  ],
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "ns2": "~1.0.1"
+  },
+  "devDependencies": {
+    "should": "~3.3.1"
+  }
+}
