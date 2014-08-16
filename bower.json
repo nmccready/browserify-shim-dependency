@@ -6,8 +6,8 @@
     "Nick McCready <nmccready@gmail.com>"
   ],
   "description": "easier way to create dependencies for browserify-shim",
-  "main": "'dist/browserify-shim-dependency.js'",
-  "test": "karma start",
+  "main": "./dist/index.js",
+  "test": "cgulp spec; ./node_modules/karma/bin/karma start;",
   "moduleType": [
     "globals",
     "node"
