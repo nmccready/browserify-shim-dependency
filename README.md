@@ -31,3 +31,7 @@ where
 ```
 dependencies == obj
 ```
+
+To use pull in via npm or bower.
+npm install --save-dev browserify-shim-dependency
+bower install --save browserify-shim-dependency
